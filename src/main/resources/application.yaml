@@ -1,0 +1,45 @@
+server:
+  port: 9000
+
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/workflow_db
+    username: postgres
+    password: postgres
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+    url: ${spring.datasource.url}
+    user: ${spring.datasource.username}
+    password: ${spring.datasource.password}
+    locations: classpath:db/migration
+    driver-class-name: ${spring.datasource.driver-class-name}
+    schemas: xml_load_workflow
+
+mapreduce:
+  enabled: true
+  job:
+    name: EXAMPLE_MAPREDUCE_JOB
+  scheduler:
+    lock-table-name: xml_load_workflow.shedlock
+    job-readiness-tracker:
+      name: workflow-xml-load-tracker
+      cron: 0/30 * * ? * *
+  queue:
+    listener:
+      container-factory:
+        name: jsonJmsListenerContainerFactory
+    task-initialized:
+      name: trademark.workflow-xml-load.task-initialized
+    job-ready-to-complete:
+      name: trademark.workflow-xml-load.job-ready-to-complete
