@@ -11,7 +11,8 @@ public class XmlLoadTaskExecutor implements TaskExecutor<XmlLoadTask, ResultReco
     @Override
     public ResultRecord execute(XmlLoadTask task) {
         //map function, this part will be executed distributed
-        return new ResultRecord();
+        //some business logic here
+        return new ResultRecord(task.getFilePath());
     }
 
     @Override

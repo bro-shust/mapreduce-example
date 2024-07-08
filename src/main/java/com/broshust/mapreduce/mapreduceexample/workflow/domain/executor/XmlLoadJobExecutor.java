@@ -12,5 +12,6 @@ public class XmlLoadJobExecutor implements JobExecutor<XmlLoadJob, ResultRecord>
     @Override
     public void execute(XmlLoadJob job, List<ResultRecord> taskResults) {
         //reduce function
+        //some business logic here
     }
 }

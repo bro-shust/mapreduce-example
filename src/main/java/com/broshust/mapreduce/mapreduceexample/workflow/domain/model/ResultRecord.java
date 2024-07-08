@@ -12,4 +12,8 @@ public class ResultRecord {
     private String id;
     private String jobId;
     private String data;
+
+    public ResultRecord(String filePath) {
+        this.data = filePath;
+    }
 }
